@@ -1,0 +1,10 @@
+{
+  "name": "Win-Win Business Solutions",
+  "description": "WIN-WIN is a trusted accounting and audit advisory firm delivering clarity, compliance, and strategic insight through a modern, global approach for businesses and institutions.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
