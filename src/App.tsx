@@ -2,6 +2,9 @@ import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { PerfProvider } from './lib/perf';
+import { I18nProvider } from './i18n';
+import type { Dict } from './i18n/en';
+import type { LangCode } from './i18n/languages';
 import { Layout } from './components/layout/Layout';
 import Home from './pages/Home';
 
@@ -17,8 +20,9 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 // The animation engine loads after first paint; `strict` forbids heavyweight `motion.*` imports.
 const loadMotion = () => import('./lib/motionFeatures').then((mod) => mod.default);
 
-export default function App() {
+export default function App({ lang, dict }: { lang: LangCode; dict: Dict }) {
   return (
+    <I18nProvider initial={lang} dict={dict}>
     <PerfProvider>
       <LazyMotion features={loadMotion} strict>
         <MotionConfig reducedMotion="user">
@@ -41,5 +45,6 @@ export default function App() {
         </MotionConfig>
       </LazyMotion>
     </PerfProvider>
+    </I18nProvider>
   );
 }

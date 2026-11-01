@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { company } from '../content/site';
 import { useSeo } from '../hooks/useSeo';
+import { useT } from '../i18n';
 
 type Kind = 'privacy' | 'terms' | 'data-protection';
 
@@ -42,18 +43,22 @@ const docs: Record<Kind, { title: string; date: string; sections: [string, strin
 
 export default function Legal({ kind }: { kind: Kind }) {
   const d = docs[kind];
-  useSeo(d.title, `${d.title} for ${company.name}.`);
+  const t = useT();
+  const kinds = Object.keys(docs) as Kind[];
+  const title = (k: Kind) => t.legal.tabs[kinds.indexOf(k)];
+  useSeo(title(kind), `${title(kind)} — ${company.name}.`);
   return (
     <article className="wrap max-w-4xl pb-24 pt-32 sm:pt-40">
       <nav aria-label="Legal documents" className="flex flex-wrap gap-2">
         {(Object.keys(docs) as Kind[]).map((k) => (
           <Link key={k} to={`/${k}`} aria-current={k === kind ? 'page' : undefined} className={`rounded-full px-4 py-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] transition ${k === kind ? 'bg-brand-900 text-white dark:bg-brand-300 dark:text-night' : 'bg-ink/[0.05] text-ink/70 hover:bg-ink/10 dark:bg-white/10 dark:text-white/70'}`}>
-            {docs[k].title}
+            {title(k)}
           </Link>
         ))}
       </nav>
       <p className="label mt-14">{d.date}</p>
-      <h1 className="h-display mt-3 text-5xl sm:text-6xl">{d.title}</h1>
+      <h1 className="h-display mt-3 text-5xl sm:text-6xl">{title(kind)}</h1>
+      {kind && t.legal.englishNote !== 'This document is provided in English.' && <p className="muted mt-3 text-sm">{t.legal.englishNote}</p>}
       <div className="mt-12 border-t border-ink/15 dark:border-white/15">
         {d.sections.map(([h, p], i) => (
           <section key={h} className="grid gap-3 border-b border-ink/10 py-8 sm:grid-cols-12 dark:border-white/10">
@@ -65,7 +70,7 @@ export default function Legal({ kind }: { kind: Kind }) {
           </section>
         ))}
       </div>
-      <p className="muted mt-10 text-sm">Questions? Email <a className="link" href={`mailto:${company.email}`}>{company.email}</a>.</p>
+      <p className="muted mt-10 text-sm">{t.legal.questions} <a className="link" href={`mailto:${company.email}`}>{company.email}</a>.</p>
     </article>
   );
 }

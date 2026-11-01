@@ -2,13 +2,9 @@ import { useRef } from 'react';
 import { m, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import type { MotionValue } from 'framer-motion';
 import { usePerf } from '../../lib/perf';
+import { useT } from '../../i18n';
 
-const MILESTONES = [
-  { t: 'Learn the fundamentals', s: 'Structured training on SFRS, CPF, GST and IRAS work' },
-  { t: 'Own recurring files', s: 'Prepare bookkeeping, payroll and schedules end to end' },
-  { t: "Check others' work", s: 'Become the second pair of eyes on every file' },
-  { t: 'Lead reviews', s: 'Senior review and mentoring under CA oversight' },
-];
+
 const PATH = 'M20 300 H130 V230 H240 V160 H350 V90 H460 V24';
 const NODES: [number, number][] = [[130, 300], [240, 230], [350, 160], [460, 90]];
 const at = (i: number) => 0.12 + i * 0.25;
@@ -19,6 +15,7 @@ const at = (i: number) => 0.12 + i * 0.25;
  * flag unfurls at the top.
  */
 export function GrowthPath() {
+  const cp = useT().careers.path;
   const box = useRef<HTMLDivElement>(null);
   const path = useRef<SVGPathElement>(null);
   const rider = useRef<SVGGElement>(null);
@@ -56,18 +53,18 @@ export function GrowthPath() {
           )}
         </svg>
         <ol className="absolute inset-0">
-          {MILESTONES.map((ms, i) => (
-            <Label key={ms.t} i={i} progress={p} still={reduced} {...ms} />
+          {cp.milestones.map((ms, i) => (
+            <Label key={ms.t} i={i} progress={p} still={reduced} step={cp.step} {...ms} />
           ))}
         </ol>
       </div>
 
       {/* Phones: compact vertical list */}
       <ol className="border-l border-ink/15 md:hidden dark:border-white/15">
-        {MILESTONES.map((ms, i) => (
+        {cp.milestones.map((ms, i) => (
           <li key={ms.t} className="relative pb-7 pl-6 last:pb-0">
             <span className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-brand-800 dark:bg-brand-300" />
-            <p className="label"><span className="label-accent">Step 0{i + 1}</span></p>
+            <p className="label"><span className="label-accent">{cp.step} 0{i + 1}</span></p>
             <p className="mt-1 font-display text-2xl font-light">{ms.t}</p>
             <p className="muted mt-1 text-[0.95rem]">{ms.s}</p>
           </li>
@@ -87,13 +84,13 @@ function Node({ x, y, progress, start, still }: { x: number; y: number; progress
   );
 }
 
-function Label({ i, t, s, progress, still }: { i: number; t: string; s: string; progress: MotionValue<number>; still: boolean }) {
+function Label({ i, t, s, step, progress, still }: { i: number; t: string; s: string; step: string; progress: MotionValue<number>; still: boolean }) {
   const [x, y] = NODES[i];
   const o = useTransform(progress, [at(i) - 0.08, at(i)], [0.25, 1]);
   const yy = useTransform(progress, [at(i) - 0.08, at(i)], [8, 0]);
   return (
     <m.li style={{ left: `${((x - 100) / 500) * 100}%`, top: `${((y + 26) / 330) * 100}%`, opacity: still ? 1 : o, y: still ? 0 : yy }} className="absolute w-[22%] min-w-[9rem]">
-      <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-brand-800 dark:text-brand-300">Step 0{i + 1}</p>
+      <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-brand-800 dark:text-brand-300">{step} 0{i + 1}</p>
       <p className="mt-1 font-display text-lg font-light leading-tight lg:text-xl">{t}</p>
       <p className="muted mt-1 hidden text-[0.82rem] leading-snug lg:block">{s}</p>
     </m.li>

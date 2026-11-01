@@ -29,9 +29,10 @@ export function MathField({ formulas = [], rulers = true }: { formulas?: Formula
   );
 }
 
-export const LEDGER_FORMULAS: Formula[] = [
-  { f: 'Σ Dr = Σ Cr', caption: 'Trial balance', className: 'left-[3%] top-[30%]' },
-  { f: 'A = L + E', caption: 'Accounting equation', className: 'right-[4%] top-[26%]' },
-  { f: 'Δ = 0.00', caption: 'Reconciled difference', className: 'bottom-[18%] left-[5%]' },
-  { f: 'GST = 9% × v', caption: 'Singapore GST', className: 'bottom-[16%] right-[5%]' },
+/** Formula annotations for the call-to-action band; captions come from the dictionary. */
+export const ledgerFormulas = (captions: readonly string[]): Formula[] => [
+  { f: 'Σ Dr = Σ Cr', caption: captions[0], className: 'left-[3%] top-[30%]' },
+  { f: 'A = L + E', caption: captions[1], className: 'right-[4%] top-[26%]' },
+  { f: 'Δ = 0.00', caption: captions[2], className: 'bottom-[18%] left-[5%]' },
+  { f: 'GST = 9% × v', caption: captions[3], className: 'bottom-[16%] right-[5%]' },
 ];

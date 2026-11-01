@@ -3,6 +3,7 @@ import { useInView } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { useLoop } from '../../hooks/useLoop';
 import { usePerf } from '../../lib/perf';
+import { useT } from '../../i18n';
 
 /* ── The proof, as data ── */
 const BANK = 124_580;
@@ -57,6 +58,7 @@ function useTimeline(active: boolean, run: number, still: boolean) {
  * Plays when visible; replays while visible on the full tier.
  */
 export function ProofPanel() {
+  const pf = useT().home.proof;
   const ref = useRef<HTMLDivElement>(null);
   const seen = useInView(ref, { once: true, amount: 0.35 });
   const loop = useLoop(ref);
@@ -85,7 +87,7 @@ export function ProofPanel() {
   };
 
   return (
-    <figure ref={ref} className="relative mx-auto w-full max-w-[34rem]" aria-label={`Bank reconciliation proof: ${fmt.format(BANK)} plus ${fmt.format(DEPOSITS)} minus ${fmt.format(CHEQUES)} equals ${fmt.format(ADJUSTED)}, agreeing to the ledger balance of ${fmt.format(LEDGER)}. Difference 0.00.`}>
+    <figure ref={ref} className="relative mx-auto w-full max-w-[34rem]" aria-label={pf.aria}>
       <div className="relative">
       {/* stacked sheets for depth */}
       <div aria-hidden className="absolute inset-0 hidden translate-x-3 translate-y-3 sm:block rounded-2xl border border-ink/10 bg-white/50 dark:border-white/10 dark:bg-white/[0.03]" />
@@ -95,26 +97,26 @@ export function ProofPanel() {
         {/* title bar */}
         <div className="flex items-center justify-between border-b border-ink/10 bg-[#f7f8fa] px-5 py-3 dark:border-white/10 dark:bg-white/[0.03]">
           <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">
-            <span className="text-brand-800 dark:text-brand-300">Proof</span> · WP B-3
+            <span className="text-brand-800 dark:text-brand-300">{pf.proof}</span> · WP B-3
           </span>
-          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">SGD<span className="hidden sm:inline"> · Period end</span></span>
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">SGD<span className="hidden sm:inline"> · {pf.period}</span></span>
         </div>
 
         <div className="px-5 pb-5 pt-4 sm:px-7 sm:pb-6 sm:pt-5">
-          <p className="font-display text-[1.6rem] font-light leading-tight tracking-[-0.02em] sm:text-[1.85rem]">Bank reconciliation</p>
+          <p className="font-display text-[1.6rem] font-light leading-tight tracking-[-0.02em] sm:text-[1.85rem]">{pf.title}</p>
 
           <div className="mt-4 grid grid-cols-[1.4rem_1fr_auto] items-baseline gap-x-3 font-mono text-[0.82rem] sm:text-[0.9rem]">
-            <Line style={row(T.bank)} op="" label="Balance per bank statement" value={bank} />
-            <Line style={row(T.deposits)} op="+" label="Deposits in transit" value={deposits} />
-            <Line style={row(T.cheques)} op="−" label="Unpresented cheques" value={cheques} paren />
+            <Line style={row(T.bank)} op="" label={pf.bank} value={bank} />
+            <Line style={row(T.deposits)} op="+" label={pf.deposits} value={deposits} />
+            <Line style={row(T.cheques)} op="−" label={pf.cheques} value={cheques} paren />
 
             {/* subtotal rule under the amounts column */}
             <span />
             <span />
             <span className="block h-px origin-right bg-ink/70 dark:bg-white/70" style={{ transform: `scaleX(${prog(t, T.rule, 0.4)})` }} />
 
-            <Line style={row(T.adjusted)} op="=" label="Adjusted bank balance" value={adjusted} strong />
-            <Line style={row(T.ledger)} op="" label="Balance per general ledger" value={ledger} />
+            <Line style={row(T.adjusted)} op="=" label={pf.adjusted} value={adjusted} strong />
+            <Line style={row(T.ledger)} op="" label={pf.ledger} value={ledger} />
 
             {/* double rule: the total is proven */}
             <span />
@@ -126,7 +128,7 @@ export function ProofPanel() {
 
             {/* difference, computed live from the figures above */}
             <span className="pt-2 font-display text-lg italic text-brand-800 dark:text-brand-300" style={row(T.ledger)}>Δ</span>
-            <span className="pt-2 font-sans text-ink-soft dark:text-slate-300" style={row(T.ledger)}>Difference</span>
+            <span className="pt-2 font-sans text-ink-soft dark:text-slate-300" style={row(T.ledger)}>{pf.difference}</span>
             <span className={`pt-2 text-right tabular-nums transition-colors duration-300 ${balanced ? 'font-medium text-brand-800 dark:text-brand-300' : 'text-amber-600'}`} style={row(T.ledger)}>
               {diff === null ? '' : fmt.format(Math.abs(diff) < 0.005 ? 0 : diff)}
             </span>
@@ -138,14 +140,14 @@ export function ProofPanel() {
               className="inline-flex items-center gap-2 rounded-full bg-brand-900 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-white transition-all duration-500 dark:bg-brand-300 dark:text-night"
               style={{ opacity: balanced ? 1 : 0, transform: `scale(${balanced ? 1 : 0.85})` }}
             >
-              <Check size={12} strokeWidth={3} /> Balanced
+              <Check size={12} strokeWidth={3} /> {pf.balanced}
             </span>
-            <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink/50 sm:inline dark:text-white/45">Adjusted − Ledger = 0</span>
+            <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink/50 sm:inline dark:text-white/45">{pf.formula}</span>
           </div>
 
           {/* sign-off chain */}
           <div className="mt-4 hidden grid-cols-3 gap-1.5 font-mono sm:grid text-[0.58rem] uppercase tracking-[0.1em] sm:text-[0.62rem]">
-            {(['Prepared · AK', 'Checked · RS', 'Review-ready'] as const).map((label, i) => {
+            {pf.chain.map((label, i) => {
               const on = t >= T.chain[i];
               return (
                 <span key={label} className="relative overflow-hidden rounded-md border border-ink/10 px-1 py-2 text-center text-ink/45 dark:border-white/10 dark:text-white/40">
@@ -160,7 +162,7 @@ export function ProofPanel() {
       </div>
 
       <figcaption className="relative mt-9 hidden font-mono sm:block text-[0.62rem] uppercase leading-relaxed tracking-[0.16em] text-ink/55 dark:text-white/50">
-        <span className="text-brand-800 dark:text-brand-300">Fig. 1</span> — Every file is proven to balance before it reaches your reviewers.
+        <span className="text-brand-800 dark:text-brand-300">{pf.fig}</span> — {pf.caption}
       </figcaption>
     </figure>
   );

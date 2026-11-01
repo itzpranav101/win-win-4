@@ -2,12 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, m, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
 import { useLoop } from '../../hooks/useLoop';
 import { usePerf } from '../../lib/perf';
+import { useT } from '../../i18n';
 
-const NODES = [
-  { label: 'Prepare', sub: 'Preparer', verb: 'Preparing' },
-  { label: 'Check', sub: 'Second reviewer', verb: 'Checking' },
-  { label: 'Review', sub: 'Senior · CA', verb: 'Reviewing' },
-];
+const NODE_INDEXES = [0, 1, 2];
 const R = 38; // ring radius as % of the box
 const C = 2 * Math.PI * R;
 const LAP_MS = 9000;
@@ -23,6 +20,7 @@ const pos = (t: number) => {
  * everything stays in sync. Runs only while visible; lite tier steps instead.
  */
 export function ReviewOrbit({ className = '' }: { className?: string }) {
+  const orbit = useT().team.orbit;
   const box = useRef<HTMLDivElement>(null);
   const loop = useLoop(box);
   const { lite, reduced } = usePerf();
@@ -54,7 +52,7 @@ export function ReviewOrbit({ className = '' }: { className?: string }) {
 
   useMotionValueEvent(t, 'change', (v) => {
     setPhase(Math.min(2, Math.floor(wrap01(v) * 3)));
-    const near = NODES.findIndex((_, i) => Math.abs(((v - i / 3 + 1.5) % 1) - 0.5) < 0.06);
+    const near = NODE_INDEXES.findIndex((i) => Math.abs(((v - i / 3 + 1.5) % 1) - 0.5) < 0.06);
     setHit(near === -1 ? null : near);
   });
 
@@ -78,16 +76,16 @@ export function ReviewOrbit({ className = '' }: { className?: string }) {
           <div>
             <AnimatePresence mode="wait" initial={false}>
               <m.p key={phase} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.3 }} className="font-display text-lg font-light italic text-brand-800 sm:text-xl dark:text-brand-300">
-                {NODES[phase].verb}
+                {orbit.nodes[phase].verb}
               </m.p>
             </AnimatePresence>
-            <p className="mt-0.5 font-mono text-[0.55rem] uppercase tracking-[0.14em] text-ink/55 dark:text-white/50">1 file · 3 sets of eyes</p>
+            <p className="mt-0.5 font-mono text-[0.55rem] uppercase tracking-[0.14em] text-ink/55 dark:text-white/50">{orbit.centre}</p>
           </div>
         </div>
       </div>
 
       {/* nodes */}
-      {NODES.map((n, i) => {
+      {orbit.nodes.map((n, i) => {
         const [x, y] = pos(i / 3);
         const lit = hit === i;
         return (

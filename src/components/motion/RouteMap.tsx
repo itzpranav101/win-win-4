@@ -5,6 +5,7 @@ import { formatTime, useLiveClock } from '../../hooks/useLiveClock';
 import { useLoop } from '../../hooks/useLoop';
 import { usePerf } from '../../lib/perf';
 import { EASE_IN_OUT } from '../../lib/ease';
+import { useT } from '../../i18n';
 
 const [MX, MY] = MADURAI;
 const [SX, SY] = SINGAPORE;
@@ -19,6 +20,7 @@ const pct = (v: number, of: number) => `${(v / of) * 100}%`;
  * City labels are HTML so they stay readable at any size, with live clocks.
  */
 export function RouteMap({ className = '' }: { className?: string }) {
+  const t = useT();
   const wrap = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const seen = useInView(wrap, { once: true, margin: '-80px' });
@@ -39,7 +41,7 @@ export function RouteMap({ className = '' }: { className?: string }) {
 
   return (
     <figure ref={wrap} className={`relative ${className}`}>
-      <svg ref={svg} viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="h-auto w-full" role="img" aria-label="Map: files prepared in Madurai, India travel to Singapore for review; review notes travel back.">
+      <svg ref={svg} viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="h-auto w-full" role="img" aria-label={t.map.aria}>
         <defs>
           <linearGradient id="rm-arc" x1="0" x2="1">
             <stop offset="0" stopColor="#12a0ee" />
@@ -105,13 +107,13 @@ export function RouteMap({ className = '' }: { className?: string }) {
       </svg>
 
       {/* HTML overlay labels */}
-      <CityLabel style={{ left: pct(MX, MAP_W), top: pct(MY, MAP_H) }} align="left" name="Madurai" country="India" role="Prepare · Check" time={`${formatTime(now, 'Asia/Kolkata')} IST`} />
-      <CityLabel style={{ left: pct(SX, MAP_W), top: pct(SY, MAP_H) }} align="right" name="Singapore" country="SG" role="Review · Sign off" time={`${formatTime(now, 'Asia/Singapore')} SGT`} />
-      <span className="pill absolute left-1/2 top-[3%] hidden -translate-x-1/2 !bg-white/90 sm:inline-flex dark:!bg-night-card/90">+2h 30m · same working day</span>
+      <CityLabel style={{ left: pct(MX, MAP_W), top: pct(MY, MAP_H) }} align="left" name={t.common.madurai} country={t.common.india} role={t.map.rolesMadurai} time={`${formatTime(now, 'Asia/Kolkata')} IST`} />
+      <CityLabel style={{ left: pct(SX, MAP_W), top: pct(SY, MAP_H) }} align="right" name={t.common.singapore} country="SG" role={t.map.rolesSingapore} time={`${formatTime(now, 'Asia/Singapore')} SGT`} />
+      <span className="pill absolute left-1/2 top-[3%] hidden -translate-x-1/2 !bg-white/90 sm:inline-flex dark:!bg-night-card/90">{t.map.gap}</span>
 
       <figcaption className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-ink/60 dark:text-white/55">
-        <span className="flex items-center gap-2"><span className="h-[2px] w-6 rounded bg-gradient-to-r from-brand-500 to-brand-800" />Review-ready files</span>
-        <span className="flex items-center gap-2"><span className="w-6 border-t border-dashed border-current" />Review notes</span>
+        <span className="flex items-center gap-2"><span className="h-[2px] w-6 rounded bg-gradient-to-r from-brand-500 to-brand-800" />{t.map.files}</span>
+        <span className="flex items-center gap-2"><span className="w-6 border-t border-dashed border-current" />{t.map.notes}</span>
       </figcaption>
     </figure>
   );

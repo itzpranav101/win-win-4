@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { m, useScroll, useTransform } from 'framer-motion';
 import type { MotionValue } from 'framer-motion';
 import { usePerf } from '../../lib/perf';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 /**
  * Large statement whose words brighten one by one as the visitor scrolls.
@@ -10,12 +11,14 @@ import { usePerf } from '../../lib/perf';
 export function WordReveal({ text, className = '' }: { text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { reduced } = usePerf();
+  // Scroll-scrubbed words only on tablet/desktop; phones get calm static text.
+  const still = reduced || !useMediaQuery('(min-width: 768px)');
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 85%', 'end 50%'] });
   const words = text.split(' ');
   return (
     <p ref={ref} className={`h-display flex flex-wrap text-[2rem] leading-[1.12] sm:text-5xl sm:leading-[1.08] lg:text-[4.2rem] ${className}`} aria-label={text.replace(/\*/g, '')}>
       {words.map((w, i) => (
-        <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={w.startsWith('*')} still={reduced}>
+        <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={w.startsWith('*')} still={still}>
           {w.replace(/\*/g, '')}
         </Word>
       ))}

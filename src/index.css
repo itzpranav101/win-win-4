@@ -5,6 +5,8 @@
 /* ───────────── Base ───────────── */
 @layer base {
   :root {
+    --fx-sans: Arial;
+    --fx-serif: Georgia;
     --header-h: 72px;
     /* Film-grain texture used on cards (tiny inline SVG, rasterised once) */
     --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.2  0 0 0 0 0.45  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.22'/></svg>");
@@ -118,6 +120,23 @@
   /* Leaves room for the phone quick-contact bar */
   .pb-safe { padding-bottom: calc(3.75rem + env(safe-area-inset-bottom)); }
 }
+
+/* ───────────── Languages ───────────── */
+html[data-lang='ta'] { --fx-sans: 'Noto Sans Tamil'; --fx-serif: 'Noto Serif Tamil'; }
+html[data-lang='hi'] { --fx-sans: 'Noto Sans Devanagari'; --fx-serif: 'Noto Serif Devanagari'; }
+html[data-lang='te'] { --fx-sans: 'Noto Sans Telugu'; --fx-serif: 'Noto Serif Telugu'; }
+html[data-lang='ml'] { --fx-sans: 'Noto Sans Malayalam'; --fx-serif: 'Noto Serif Malayalam'; }
+html[data-lang='zh'] { --fx-sans: 'Noto Sans SC'; --fx-serif: 'Noto Serif SC'; }
+html[data-lang='ja'] { --fx-sans: 'Noto Sans JP'; --fx-serif: 'Noto Serif JP'; }
+
+/* Non-Latin scripts: no synthetic italics, no wide tracking or forced caps, room for tall glyphs */
+html:is([data-script='indic'], [data-script='cjk']) .accent { font-style: normal; }
+html:is([data-script='indic'], [data-script='cjk']) .h-display { letter-spacing: 0; }
+html:is([data-script='indic'], [data-script='cjk']) :is(.label, .pill, .chip, .btn, .font-mono) { letter-spacing: 0.02em; text-transform: none; }
+html[data-script='indic'] .h-display { line-height: 1.32 !important; zoom: 0.82; }
+html[data-script='indic'] .lead { line-height: 1.8; }
+html[data-script='cjk'] .h-display { line-height: 1.22 !important; }
+.h-display { overflow-wrap: break-word; }
 
 /* ───────────── Lite performance tier ───────────── */
 [data-perf='lite'] * {

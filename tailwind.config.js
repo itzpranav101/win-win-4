@@ -6,9 +6,10 @@ export default {
     extend: {
       screens: { xs: '400px' },
       fontFamily: {
-        display: ['Newsreader', '"Iowan Old Style"', 'Georgia', 'serif'],
-        sans: ['"Hanken Grotesk"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
-        mono: ['"DM Mono"', 'Menlo', 'monospace'],
+        // --fx-* hold the script font for the active language (see index.css)
+        display: ['Newsreader', 'var(--fx-serif)', '"Iowan Old Style"', 'Georgia', 'serif'],
+        sans: ['"Hanken Grotesk"', 'var(--fx-sans)', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        mono: ['"DM Mono"', 'var(--fx-sans)', 'Menlo', 'monospace'],
       },
       colors: {
         // Pulled from the Win-Win logo mark
