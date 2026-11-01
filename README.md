@@ -34,6 +34,17 @@ src/
 
 To change wording, edit `src/content/site.ts`; layouts read from it.
 
+## Languages
+
+English, Tamil, Hindi, Telugu, Chinese (Simplified), Malay, Malayalam, Spanish, French and Japanese,
+switchable from the globe button in the header (the choice is remembered; `?lang=ta` etc. also works).
+
+- English source text: `src/i18n/en.ts`. Translations: `src/i18n/locales/*.ts` — TypeScript fails the build if any
+  translation is missing a string, so they always stay in sync.
+- Each language loads as its own small file, and Tamil/Hindi/Telugu/Malayalam/Chinese/Japanese fonts download only
+  when that language is chosen.
+- Legal pages (privacy, terms, data protection) stay in English, with a translated note.
+
 ## Motion graphics
 
 | Component | Where | What it does |
