@@ -15,7 +15,7 @@ export function MathField({ formulas = [], rulers = true }: { formulas?: Formula
       <div className="graph-paper absolute inset-0" />
       {rulers && (
         <>
-          <div className="ruler-x absolute inset-x-0 top-[calc(var(--header-h)+env(safe-area-inset-top))] h-2.5 text-ink/25 dark:text-white/20" />
+          <div className="ruler-x absolute inset-x-0 hidden sm:block top-[calc(var(--header-h)+env(safe-area-inset-top))] h-2.5 text-ink/25 dark:text-white/20" />
           <div className="ruler-y absolute bottom-0 left-0 top-[calc(var(--header-h)+env(safe-area-inset-top))] hidden w-2.5 text-ink/25 lg:block dark:text-white/20" />
         </>
       )}

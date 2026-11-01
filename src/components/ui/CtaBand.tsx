@@ -6,9 +6,9 @@ import { LEDGER_FORMULAS, MathField } from '../motion/MathField';
 
 export function CtaBand({ title, text = 'Tell us the work type, timing and volume. We usually reply within one business day with the next practical step.' }: { title?: React.ReactNode; text?: string }) {
   return (
-    <section className="pb-20 sm:pb-28">
+    <section className="pb-14 sm:pb-28">
       <div className="wrap">
-        <Reveal className="sky-wash relative overflow-hidden rounded-[2rem] border border-ink/[0.06] px-6 py-16 text-center sm:px-12 sm:py-24 dark:border-white/10">
+        <Reveal className="sky-wash relative overflow-hidden rounded-[2rem] border border-ink/[0.06] px-5 py-12 text-center sm:px-12 sm:py-24 dark:border-white/10">
           <MathField rulers={false} formulas={LEDGER_FORMULAS} />
           <div className="relative">
             <p className="label">Start a conversation</p>
@@ -16,7 +16,7 @@ export function CtaBand({ title, text = 'Tell us the work type, timing and volum
             <p className="lead mx-auto mt-5 max-w-xl">{text}</p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to="/contact" className="btn-primary w-full max-w-[18rem] sm:w-auto">Start an enquiry <ArrowRight size={14} /></Link>
-              <a href={waLink('Hi Win-Win, we would like to enquire about your accounting support services.')} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full max-w-[18rem] sm:w-auto">WhatsApp us</a>
+              <a href={waLink('Hi Win-Win, we would like to enquire about your accounting support services.')} target="_blank" rel="noopener noreferrer" className="btn-ghost hidden sm:inline-flex">WhatsApp us</a>
             </div>
           </div>
         </Reveal>

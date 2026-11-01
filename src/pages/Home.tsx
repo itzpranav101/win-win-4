@@ -72,7 +72,7 @@ function Hero() {
     <section className="sky-wash relative overflow-hidden">
       <MathField />
 
-      <div className="wrap relative grid items-center gap-14 pb-14 pt-28 sm:pt-36 lg:grid-cols-12 lg:gap-12 lg:pb-20 lg:pt-40 xl:gap-20 lg:[@media(max-height:820px)]:pt-32">
+      <div className="wrap relative grid items-center gap-10 pb-12 pt-28 sm:gap-14 sm:pb-14 sm:pt-36 lg:grid-cols-12 lg:gap-12 lg:pb-20 lg:pt-40 xl:gap-20 lg:[@media(max-height:820px)]:pt-32">
         {/* ── Message ── */}
         <div className="lg:col-span-7">
           <HeroClock />
@@ -89,17 +89,22 @@ function Hero() {
           </h1>
 
           <p className="lead mt-7 max-w-[36rem] animate-fade-up [animation-delay:380ms] sm:mt-8">
-            The Madurai back office for {company.parent.replace('-', '\u2011')}, Singapore. Bookkeeping, audit working papers, payroll, GST and tax —{' '}
-            <span className="text-ink dark:text-white">prepared to your templates, checked line by line and delivered review&#8209;ready.</span>
+            The Madurai back office for {company.parent.replace('-', '\u2011')}, Singapore.
+            <span className="hidden sm:inline"> Bookkeeping, audit working papers, payroll, GST and tax —</span>{' '}
+            <span className="text-ink dark:text-white">
+              <span className="sm:hidden">Accounting work prepared, checked and review&#8209;ready.</span>
+              <span className="hidden sm:inline">prepared to your templates, checked line by line and delivered review&#8209;ready.</span>
+            </span>
           </p>
 
-          <div className="mt-9 flex animate-fade-up flex-col gap-3 [animation-delay:480ms] xs:flex-row">
-            <Link to="/contact" className="btn-primary">Discuss your work <ArrowRight size={14} /></Link>
-            <a href="#journey" className="btn-ghost">See how a file moves</a>
+          <div className="mt-8 flex animate-fade-up flex-col items-start gap-3 [animation-delay:480ms] sm:mt-9 sm:flex-row sm:items-center">
+            <Link to="/contact" className="btn-primary w-full sm:w-auto">Discuss your work <ArrowRight size={14} /></Link>
+            <a href="#journey" className="btn-ghost hidden sm:inline-flex">See how a file moves</a>
+            <a href="#journey" className="link mt-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] sm:hidden">See how a file moves ↓</a>
           </div>
 
           {/* specification list */}
-          <dl className="mt-12 grid max-w-[36rem] animate-fade-up grid-cols-3 border-t border-ink/15 [animation-delay:600ms] dark:border-white/15">
+          <dl className="mt-12 hidden max-w-[36rem] animate-fade-up grid-cols-3 sm:grid border-t border-ink/15 [animation-delay:600ms] dark:border-white/15">
             {SPEC.map((s, i) => (
               <div key={s.k} className={`pt-4 ${i > 0 ? 'border-l border-ink/10 pl-4 sm:pl-5 dark:border-white/10' : 'pr-4'}`}>
                 <dt className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-ink/55 dark:text-white/50">
@@ -118,7 +123,7 @@ function Hero() {
       </div>
 
       {/* ── Closing strip ── */}
-      <div className="wrap relative pb-14 sm:pb-16">
+      <div className="wrap relative hidden pb-14 sm:block sm:pb-16">
         <div className="flex flex-col items-center gap-4 border-t border-ink/10 pt-8 lg:flex-row lg:justify-between lg:gap-10 dark:border-white/10">
           <p className="label shrink-0">Working knowledge of</p>
           <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 sm:gap-0 lg:pr-12">
@@ -175,7 +180,7 @@ function IndexStrip() {
     { href: '#quality', t: 'How quality is protected', s: 'Checks and confidentiality' },
   ];
   return (
-    <section id="overview" className="pb-4 pt-14 sm:pt-20">
+    <section id="overview" className="hidden pb-4 pt-14 sm:block sm:pt-20">
       <div className="wrap-narrow">
         <Reveal>
           <p className="label text-center !tracking-[0.28em] sm:!text-[0.78rem]">In the next few minutes you'll see</p>
@@ -207,13 +212,13 @@ function Numbers() {
     { n: 0, t: 'attest opinions issued. Sign-off stays with you.', accent: true },
   ];
   return (
-    <section className="py-16 sm:py-24">
+    <section id="numbers" className="py-12 sm:py-24">
       <div className="wrap-narrow">
         <Reveal><p className="label text-center">The workflow, in numbers</p></Reveal>
         <div className="mt-8 grid grid-cols-2 border-t border-ink/15 lg:grid-cols-4 dark:border-white/15">
           {stats.map((s, i) => (
             <Reveal key={s.t} delay={i * 0.06} className={`py-7 ${cols(i)}`}>
-              <CountUp to={s.n} className={`block font-display text-[4.2rem] font-light leading-none tracking-[-0.04em] sm:text-7xl lg:text-8xl ${s.accent ? 'text-brand-800 dark:text-brand-300' : ''}`} />
+              <CountUp to={s.n} className={`block font-display text-5xl font-light leading-none tracking-[-0.04em] sm:text-7xl lg:text-8xl ${s.accent ? 'text-brand-800 dark:text-brand-300' : ''}`} />
               <p className="muted mt-4 max-w-[15rem] text-[0.92rem] leading-snug">{s.t}</p>
             </Reveal>
           ))}
@@ -237,7 +242,7 @@ function Partnership() {
           <SectionIntro num="01" label="The partnership" title={<>Prepared in Madurai, <span className="accent">signed off in Singapore.</span></>}>
             Clear boundaries are the point. We handle the preparation layer; {company.parent} keeps the client relationship and every professional judgement.
           </SectionIntro>
-          <div className="mt-10 grid grid-cols-2 gap-6 border-t border-ink/15 pt-6 dark:border-white/15">
+          <div className="mt-10 hidden grid-cols-2 gap-6 border-t border-ink/15 pt-6 sm:grid dark:border-white/15">
             {[split.us, split.them].map((side, i) => (
               <Reveal key={side.label} delay={i * 0.08}>
                 <p className={`label ${i === 1 ? '!text-brand-800 dark:!text-brand-300' : ''}`}>{i === 0 ? 'We do' : 'You keep'}</p>
@@ -265,20 +270,20 @@ function Services() {
     <section id="services" className="section">
       <div className="wrap">
         <SectionIntro center num="03" label="Services" title={<>Four services, <span className="accent">one standard.</span></>} />
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={i * 0.07}>
-              <Link to={`/services#${s.id}`} className={`card card-hover group flex h-full flex-col p-6 sm:p-7 ${i === services.length - 1 ? 'card-accent' : ''}`}>
+              <Link to={`/services#${s.id}`} className={`card card-hover group flex h-full flex-col p-5 sm:p-7 ${i === services.length - 1 ? 'card-accent' : ''}`}>
                 <p className="label"><span className="label-accent">0{i + 1}</span> · {s.short}</p>
-                <ServiceGlyph id={s.id} className="my-7 h-20 w-24" />
-                <h3 className="font-display text-[1.75rem] font-light leading-[1.05] tracking-[-0.03em]">{s.title}</h3>
-                <p className="muted mt-3 text-[0.95rem] leading-relaxed">{s.summary}</p>
+                <ServiceGlyph id={s.id} className="my-7 hidden h-20 w-24 sm:block" />
+                <h3 className="mt-2 font-display text-[1.5rem] font-light leading-[1.05] tracking-[-0.03em] sm:mt-0 sm:text-[1.75rem]">{s.title}</h3>
+                <p className="muted mt-2 line-clamp-2 text-[0.92rem] leading-relaxed sm:mt-3 sm:line-clamp-none sm:text-[0.95rem]">{s.summary}</p>
                 <ul className="mt-5 hidden space-y-2 lg:block">
                   {s.scope.slice(0, 3).map((x) => (
                     <li key={x} className="flex gap-2.5 text-sm text-ink-soft dark:text-slate-300"><span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-600" />{x}</li>
                   ))}
                 </ul>
-                <span className="mt-auto inline-flex items-center gap-2 pt-7 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-brand-800 dark:text-brand-300">
+                <span className="mt-auto inline-flex items-center gap-2 pt-4 font-mono sm:pt-7 text-[0.68rem] uppercase tracking-[0.16em] text-brand-800 dark:text-brand-300">
                   Read more <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </Link>
@@ -308,7 +313,7 @@ function Process() {
         <ol ref={ref} className="relative mt-14 grid border-t border-ink/15 md:grid-cols-2 lg:grid-cols-4 dark:border-white/15">
           <m.span aria-hidden style={{ scaleX: reduced ? 1 : fill }} className="absolute -top-px left-0 right-0 h-[2px] origin-left bg-brand-800 dark:bg-brand-300" />
           {steps.map((s, i) => (
-            <li key={s.title} className={`border-ink/10 py-7 md:pr-6 dark:border-white/10 ${PROCESS_BORDERS[i]}`}>
+            <li key={s.title} className={`border-ink/10 py-5 sm:py-7 md:pr-6 dark:border-white/10 ${PROCESS_BORDERS[i]}`}>
               <StepText i={i} progress={fill} still={reduced} title={s.title} text={s.text} />
             </li>
           ))}
@@ -325,7 +330,7 @@ function StepText({ i, progress, still, title, text }: { i: number; progress: Mo
   return (
     <m.div style={still ? undefined : { opacity: o, y }}>
       <span className="font-mono text-xs text-brand-800 dark:text-brand-300">Step 0{i + 1}</span>
-      <h3 className="mt-3 font-display text-[1.75rem] font-light tracking-[-0.03em]">{title}</h3>
+      <h3 className="mt-2 font-display text-[1.5rem] font-light tracking-[-0.03em] sm:mt-3 sm:text-[1.75rem]">{title}</h3>
       <p className="muted mt-2 leading-relaxed">{text}</p>
     </m.div>
   );
@@ -335,14 +340,14 @@ function StepText({ i, progress, still, title, text }: { i: number; progress: Mo
 
 function Quality() {
   return (
-    <section id="quality" className="pb-20 sm:pb-28 lg:pb-36">
+    <section id="quality" className="pb-14 sm:pb-28 lg:pb-36">
       <div className="wrap grid gap-4 lg:grid-cols-2">
-        <Reveal className="card p-7 sm:p-10">
+        <Reveal className="card p-6 sm:p-10">
           <p className="label"><span className="label-accent">05</span> · Quality</p>
           <h2 className="h-display mt-4 text-4xl leading-[1.04] sm:text-5xl">Checked twice <span className="accent">before it reaches you.</span></h2>
           <ul className="mt-8">
             {quality.map((q, i) => (
-              <li key={q} className="flex items-center gap-4 border-t border-ink/10 py-3.5 dark:border-white/10">
+              <li key={q} className={`${i > 2 ? 'hidden sm:flex' : 'flex'} items-center gap-4 border-t border-ink/10 py-3.5 dark:border-white/10`}>
                 <span className="font-mono text-[0.65rem] text-ink/45 dark:text-white/40">0{i + 1}</span>
                 <span className="flex-1 text-ink-soft dark:text-slate-300">{q}</span>
                 <Check size={16} className="shrink-0 text-brand-700 dark:text-brand-300" />
@@ -350,7 +355,7 @@ function Quality() {
             ))}
           </ul>
         </Reveal>
-        <Reveal delay={0.08} className="card card-accent p-7 sm:p-10">
+        <Reveal delay={0.08} className="card card-accent p-6 sm:p-10">
           <p className="label"><span className="label-accent">06</span> · Confidentiality</p>
           <h2 className="h-display mt-4 text-4xl leading-[1.04] sm:text-5xl">Client data, <span className="accent">handled carefully.</span></h2>
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-ink/10 pt-8 dark:border-white/10">

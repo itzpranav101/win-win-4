@@ -88,8 +88,8 @@ export function ProofPanel() {
     <figure ref={ref} className="relative mx-auto w-full max-w-[34rem]" aria-label={`Bank reconciliation proof: ${fmt.format(BANK)} plus ${fmt.format(DEPOSITS)} minus ${fmt.format(CHEQUES)} equals ${fmt.format(ADJUSTED)}, agreeing to the ledger balance of ${fmt.format(LEDGER)}. Difference 0.00.`}>
       <div className="relative">
       {/* stacked sheets for depth */}
-      <div aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-ink/10 bg-white/50 dark:border-white/10 dark:bg-white/[0.03]" />
-      <div aria-hidden className="absolute inset-0 translate-x-6 translate-y-6 rounded-2xl border border-ink/[0.06] bg-white/30 dark:border-white/[0.06] dark:bg-white/[0.02]" />
+      <div aria-hidden className="absolute inset-0 hidden translate-x-3 translate-y-3 sm:block rounded-2xl border border-ink/10 bg-white/50 dark:border-white/10 dark:bg-white/[0.03]" />
+      <div aria-hidden className="absolute inset-0 hidden translate-x-6 translate-y-6 sm:block rounded-2xl border border-ink/[0.06] bg-white/30 dark:border-white/[0.06] dark:bg-white/[0.02]" />
 
       <div aria-hidden className="relative overflow-hidden rounded-2xl border border-ink/[0.12] bg-white shadow-[0_40px_80px_-40px_rgb(11_58_134/0.45)] dark:border-white/[0.12] dark:bg-night-card">
         {/* title bar */}
@@ -97,7 +97,7 @@ export function ProofPanel() {
           <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">
             <span className="text-brand-800 dark:text-brand-300">Proof</span> · WP B-3
           </span>
-          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">SGD · Period end</span>
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/60 dark:text-white/55">SGD<span className="hidden sm:inline"> · Period end</span></span>
         </div>
 
         <div className="px-5 pb-5 pt-4 sm:px-7 sm:pb-6 sm:pt-5">
@@ -140,11 +140,11 @@ export function ProofPanel() {
             >
               <Check size={12} strokeWidth={3} /> Balanced
             </span>
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink/50 dark:text-white/45">Adjusted − Ledger = 0</span>
+            <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink/50 sm:inline dark:text-white/45">Adjusted − Ledger = 0</span>
           </div>
 
           {/* sign-off chain */}
-          <div className="mt-4 grid grid-cols-3 gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.1em] sm:text-[0.62rem]">
+          <div className="mt-4 hidden grid-cols-3 gap-1.5 font-mono sm:grid text-[0.58rem] uppercase tracking-[0.1em] sm:text-[0.62rem]">
             {(['Prepared · AK', 'Checked · RS', 'Review-ready'] as const).map((label, i) => {
               const on = t >= T.chain[i];
               return (
@@ -159,7 +159,7 @@ export function ProofPanel() {
       </div>
       </div>
 
-      <figcaption className="relative mt-9 font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.16em] text-ink/55 dark:text-white/50">
+      <figcaption className="relative mt-9 hidden font-mono sm:block text-[0.62rem] uppercase leading-relaxed tracking-[0.16em] text-ink/55 dark:text-white/50">
         <span className="text-brand-800 dark:text-brand-300">Fig. 1</span> — Every file is proven to balance before it reaches your reviewers.
       </figcaption>
     </figure>

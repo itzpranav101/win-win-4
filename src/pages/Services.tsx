@@ -46,7 +46,7 @@ export default function Services() {
         </div>
       </nav>
 
-      <div className="wrap space-y-24 py-20 sm:space-y-32 sm:py-28 lg:space-y-40">
+      <div className="wrap space-y-16 py-12 sm:space-y-32 sm:py-28 lg:space-y-40">
         {services.map((s, i) => <ServiceBlock key={s.id} s={s} i={i} />)}
       </div>
 
@@ -118,7 +118,7 @@ function ServiceBlock({ s, i }: { s: Service; i: number }) {
         <Reveal className="mt-8">
           <p className="label">Scope of support</p>
           <ul className="mt-3 flex flex-wrap gap-2">
-            {s.scope.map((x) => <li key={x} className="chip !font-sans !text-[0.85rem] !tracking-normal">{x}</li>)}
+            {s.scope.map((x, j) => <li key={x} className={`chip !font-sans !text-[0.85rem] !tracking-normal ${j > 2 ? '!hidden sm:!inline-flex' : ''}`}>{x}</li>)}
           </ul>
         </Reveal>
 
@@ -150,7 +150,7 @@ function ServiceBlock({ s, i }: { s: Service; i: number }) {
         )}
 
         <Reveal className="mt-8">
-          <Link to="/contact" className="btn-ghost">Discuss {s.short.toLowerCase()} <ArrowRight size={14} /></Link>
+          <Link to="/contact" className="btn-ghost hidden sm:inline-flex">Discuss {s.short.toLowerCase()} <ArrowRight size={14} /></Link>
         </Reveal>
       </div>
     </article>

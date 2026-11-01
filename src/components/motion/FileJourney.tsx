@@ -39,7 +39,7 @@ export function FileJourney() {
   const s = journey[stage];
 
   return (
-    <section ref={ref} aria-label="How one file moves from inbox to sign-off" className="relative h-[460vh]">
+    <section ref={ref} aria-label="How one file moves from inbox to sign-off" className="relative h-[320vh] lg:h-[460vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="wrap grid h-full grid-rows-[auto_minmax(0,1fr)] content-center gap-5 pb-16 pt-[calc(var(--header-h)+12px)] lg:grid-cols-12 lg:grid-rows-1 lg:items-center lg:gap-14 lg:pb-10">
           {/* ── Narrative ── */}
@@ -63,7 +63,7 @@ export function FileJourney() {
                   <h3 className="h-display mt-3 text-[2rem] leading-[1.02] sm:text-5xl lg:text-[3.5rem]">
                     {s.title[0]} <span className="accent">{s.title[1]}</span>
                   </h3>
-                  <p className="lead mt-5 max-w-md max-lg:[@media(max-height:740px)]:hidden">{s.text}</p>
+                  <p className="lead mt-5 hidden max-w-md sm:block max-lg:[@media(max-height:740px)]:hidden">{s.text}</p>
                   <div className="mt-6 hidden flex-wrap gap-2 sm:flex">
                     {s.chips.map((c) => <span key={c} className="chip">{c}</span>)}
                   </div>

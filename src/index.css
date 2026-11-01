@@ -42,9 +42,9 @@
 
   /* Newsreader light display type */
   .h-display { @apply font-display font-light tracking-[-0.035em] text-ink dark:text-white; }
-  .h-section { @apply h-display text-[2.35rem] leading-[1.02] sm:text-5xl lg:text-[3.6rem]; }
+  .h-section { @apply h-display text-[2.1rem] leading-[1.04] sm:text-5xl lg:text-[3.6rem]; }
   .accent { @apply font-display font-light italic text-brand-800 dark:text-brand-300; }
-  .lead { @apply text-base leading-relaxed text-ink-soft sm:text-lg dark:text-slate-300; }
+  .lead { @apply text-[0.98rem] leading-relaxed text-ink-soft sm:text-lg dark:text-slate-300; }
   .muted { @apply text-ink-mute dark:text-slate-400; }
 
   /* Cards */
@@ -70,7 +70,7 @@
     @apply dark:border-white/15 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500;
   }
 
-  .section { @apply py-20 sm:py-28 lg:py-36; }
+  .section { @apply py-14 sm:py-28 lg:py-36; }
 
   .sky-wash { background: linear-gradient(180deg, #cfe6f8 0%, #e6f2fc 40%, #ffffff 100%); }
   .dark .sky-wash { background: linear-gradient(180deg, #0b1d3a 0%, #0a1426 42%, #07090d 100%); }

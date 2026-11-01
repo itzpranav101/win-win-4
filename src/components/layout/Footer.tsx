@@ -12,13 +12,13 @@ const legal = [
 export function Footer() {
   return (
     <footer id="site-footer" className="cv-auto border-t border-ink/10 bg-[#f6f6f3] dark:border-white/10 dark:bg-night-card">
-      <div className="wrap py-16 sm:py-24">
-        <p className="h-display max-w-4xl text-[2.2rem] leading-[1.02] sm:text-6xl">
+      <div className="wrap py-12 sm:py-24">
+        <p className="h-display hidden max-w-4xl text-[2.2rem] leading-[1.02] sm:block sm:text-6xl">
           Prepared in Madurai. <span className="accent">Reviewed in Singapore.</span>
         </p>
 
-        <div className="mt-14 grid gap-10 border-t border-ink/15 pt-10 sm:grid-cols-2 lg:grid-cols-12 dark:border-white/15">
-          <div className="lg:col-span-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:mt-14 sm:border-t sm:border-ink/15 sm:pt-10 lg:grid-cols-12 dark:sm:border-white/15">
+          <div className="col-span-2 lg:col-span-4">
             <Logo tag={false} />
             <ul className="mt-6 space-y-2 text-[0.95rem]">
               <li><a href={`mailto:${company.email}`} className="link">{company.email}</a></li>
@@ -35,7 +35,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-ink/10 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+        <div className="mt-10 flex flex-col gap-4 border-t sm:mt-14 border-ink/10 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
           <p className="label !tracking-[0.12em]">© {new Date().getFullYear()} {company.legalName}</p>
           <p className="label hidden !tracking-[0.12em] lg:block">Non-attest support · sign-off stays with your professionals</p>
           <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="pill self-start !py-2 hover:!border-ink/40 sm:self-auto">
