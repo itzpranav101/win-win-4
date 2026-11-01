@@ -1,0 +1,13 @@
+// Cloudflare Workers static-assets config for win-win.co.in.
+// Cloudflare build settings: root directory = (blank), build command = `npm run build`,
+// deploy command = `npx wrangler deploy`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "win-win-4",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    // Unknown paths (/services, /team, …) return index.html so the client router can render them
+    "not_found_handling": "single-page-application"
+  }
+}

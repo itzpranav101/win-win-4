@@ -85,19 +85,18 @@ You can force a tier with `?perf=lite` or `?perf=full`.
 
 The site is a static build: `npm run build` → `dist/`. Node 22 (see `.nvmrc`).
 
-### Cloudflare Pages (recommended — win-win.co.in's DNS is on Cloudflare)
+### Cloudflare Workers (live at win-win.co.in)
 
-Workers & Pages → Create → Pages → Connect to Git → `itzpranav101/win-win-4`:
+The `win-win-4` Worker builds from this repository; `wrangler.jsonc` publishes `dist/` as static assets with
+single-page-app routing. Worker → Settings → Build:
 
 | Setting | Value |
 | --- | --- |
-| Production branch | `main` |
-| Framework preset | Vite (or None) |
+| Root directory | *(blank — repository root)* |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
 
-Then add `win-win.co.in` (and `www.win-win.co.in`) under **Custom domains**. Every push to `main` redeploys.
-`public/_redirects` makes deep links like `/services` work.
+Every push to `main` redeploys automatically.
 
 ### GitHub Pages (alternative)
 
@@ -109,7 +108,6 @@ Settings → Pages → Source: **GitHub Actions**, custom domain `win-win.co.in`
 The site is a static SPA, so serve `dist/`:
 
 - **Vercel:** `vercel.json` rewrites all routes to `index.html`.
-- **Netlify:** `public/_redirects` does the same.
 - **GitHub Pages and similar hosts:** `dist/404.html` is a copy of `index.html`.
 
 The contact form doesn't need a backend. It opens a pre-filled email to `admin@win-win.com.in`.
