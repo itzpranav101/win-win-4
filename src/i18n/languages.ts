@@ -30,7 +30,7 @@ export const LANGUAGES: Language[] = [
 ];
 
 /** Languages with finished translations (the picker hides itself until there are two or more). */
-const READY: LangCode[] = ['en', 'ta'];
+const READY: LangCode[] = ['en', 'ta', 'hi', 'te'];
 export const AVAILABLE: Language[] = LANGUAGES.filter((l) => READY.includes(l.code));
 
 export const DEFAULT_LANG: LangCode = 'en';
