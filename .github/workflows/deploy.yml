@@ -1,5 +1,8 @@
 name: Deploy to GitHub Pages
 
+# Only used if the site is hosted on GitHub Pages instead of Cloudflare Pages.
+# Push-triggered runs are skipped unless the repository variable
+# DEPLOY_TO_GITHUB_PAGES is set to "true"; it can always be run by hand.
 on:
   push:
     branches: [main]
@@ -16,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ vars.DEPLOY_TO_GITHUB_PAGES == 'true' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,10 +28,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Build for https://<user>.github.io/<repo>/
+      # The site is served from the root of its own domain (win-win.co.in).
+      # For a plain https://<user>.github.io/<repo>/ address, set the repository
+      # variable BASE_PATH to "/<repo>/".
+      - name: Build
         run: npm run build
         env:
-          BASE_PATH: /${{ github.event.repository.name }}/
+          BASE_PATH: ${{ vars.BASE_PATH || '/' }}
       - run: touch dist/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

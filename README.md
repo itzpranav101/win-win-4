@@ -83,11 +83,26 @@ You can force a tier with `?perf=lite` or `?perf=full`.
 
 ## Deploying
 
-### GitHub Pages (set up)
+The site is a static build: `npm run build` → `dist/`. Node 22 (see `.nvmrc`).
 
-`.github/workflows/deploy.yml` builds and publishes the site on every push to `main`, at
-`https://<user>.github.io/<repo>/`. One-time setup: **Settings → Pages → Source: GitHub Actions**.
-(GitHub Pages on a private repository needs a paid GitHub plan; on a free plan make the repository public.)
+### Cloudflare Pages (recommended — win-win.co.in's DNS is on Cloudflare)
+
+Workers & Pages → Create → Pages → Connect to Git → `itzpranav101/win-win-4`:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Framework preset | Vite (or None) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+
+Then add `win-win.co.in` (and `www.win-win.co.in`) under **Custom domains**. Every push to `main` redeploys.
+`public/_redirects` makes deep links like `/services` work.
+
+### GitHub Pages (alternative)
+
+Settings → Pages → Source: **GitHub Actions**, custom domain `win-win.co.in`; set the repository variable
+`DEPLOY_TO_GITHUB_PAGES=true` so pushes deploy automatically, and point the domain's DNS at GitHub Pages.
 
 ### Other hosts
 
