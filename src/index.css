@@ -133,7 +133,7 @@ html[data-lang='ja'] { --fx-sans: 'Noto Sans JP'; --fx-serif: 'Noto Serif JP'; }
 html:is([data-script='indic'], [data-script='cjk']) .accent { font-style: normal; }
 html:is([data-script='indic'], [data-script='cjk']) .h-display { letter-spacing: 0; }
 html:is([data-script='indic'], [data-script='cjk']) :is(.label, .pill, .chip, .btn, .font-mono) { letter-spacing: 0.02em; text-transform: none; }
-html[data-script='indic'] .h-display { line-height: 1.32 !important; zoom: 0.82; }
+html[data-script='indic'] .h-display { line-height: 1.32 !important; zoom: 0.72; }
 html[data-script='indic'] .lead { line-height: 1.8; }
 html[data-script='cjk'] .h-display { line-height: 1.22 !important; }
 .h-display { overflow-wrap: break-word; }
